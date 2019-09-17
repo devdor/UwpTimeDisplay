@@ -1,0 +1,90 @@
+﻿<Page
+    x:Class="TimeDisplayApp.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TimeDisplayApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition />
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource Breakpoint640Plus}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NarrowLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="contentSV.Padding" Value="10,40,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <ScrollViewer x:Name="contentSV"
+                      Padding="40,0,0,0"
+                      IsTabStop="False"
+                      UseSystemFocusVisuals="False"
+                      VerticalScrollBarVisibility="Auto"
+                      VerticalScrollMode="Auto">
+            <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
+                <TextBlock x:Uid="/SettingsView/TxtHeaderTimeDisplay" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
+                <ComboBox x:Uid="/SettingsView/CmbFont" Margin="0,10,0,0" Width="200"
+                                  ItemsSource="{x:Bind FontList}" DisplayMemberPath="Item1" SelectedValuePath="Item2" x:Name="cmbFontName"/>
+                <ComboBox x:Uid="/SettingsView/CmbFontSize" IsEditable="True" Width="200" ItemsSource="{x:Bind FontSizeList}" x:Name="cmbFontSize"/>
+                <local:ColorSettingsControl x:Uid="/SettingsView/BtnOnColor" Margin="0,10,0,0" x:Name="colCtrlOn"/>
+                <local:ColorSettingsControl x:Uid="/SettingsView/BtnOffColor" x:Name="colCtrlOff"/>
+                <local:ColorSettingsControl x:Uid="/SettingsView/BtnBackgroundColor" x:Name="colCtrlBackground"/>
+                <ToggleSwitch x:Uid="/SettingsView/ToggleBorder" x:Name="toggleSwBorder" OffContent="Off" OnContent="On" Margin="0,30,0,0"/>
+                <ToggleSwitch x:Uid="/SettingsView/ToggleEffects" x:Name="toggleSwEffects" OffContent="Off" OnContent="On" Margin="0,30,0,0"/>
+                <HyperlinkButton x:Uid="/SettingsView/HLBtnResetSettings" x:Name="lnkResetSettings"/>                
+                
+                <!-- Theme -->
+                <TextBlock x:Uid="/SettingsView/TxtThemeMode" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,30,0,0" FontWeight="Normal"/>
+                <StackPanel x:Name="ThemePanel" Margin="0,10,0,0">
+                    <RadioButton Tag="Light" Checked="OnThemeRadioButtonChecked" x:Uid="/SettingsView/RbThemeLight"/>
+                    <RadioButton Tag="Dark" Checked="OnThemeRadioButtonChecked" x:Uid="/SettingsView/RbThemeDark"/>
+                    <RadioButton Tag="Default" Checked="OnThemeRadioButtonChecked" x:Uid="/SettingsView/RbThemeSystemSettings"/>
+                </StackPanel>
+
+                <HyperlinkButton x:Uid="/SettingsView/HLBtnWindowsColors" NavigateUri="ms-settings:personalization-background"/>
+
+                <!-- About -->
+                <TextBlock x:Uid="/SettingsView/TxtAboutThisApp" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,30,0,0" FontWeight="Normal"/>
+                <RichTextBlock MaxWidth="740" Margin="0,10,0,0" IsTextSelectionEnabled="True" HorizontalAlignment="Left">
+                    <Paragraph>
+                        <Run x:Uid="/SettingsView/TxtVersionLbl"/>
+                        <Run Text="{x:Bind Version}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Run x:Uid="/SettingsView/TxtContact"/>                        
+                        <Hyperlink NavigateUri="mailto:stn.devdor@outlook.com">stn.devdor@outlook.com</Hyperlink>
+                    </Paragraph>
+                </RichTextBlock>
+
+                <!-- Disclaimer -->
+                <TextBlock x:Uid="/SettingsView/TxtDisclaimerHeader" VerticalAlignment="Bottom" Style="{StaticResource SubtitleTextBlockStyle}"
+                               Margin="0,30,0,0" FontWeight="Normal" />
+                <RichTextBlock MaxWidth="840" Margin="0,10,0,0" IsTextSelectionEnabled="True">
+                    <Paragraph>
+                        <Run x:Uid="/SettingsView/TxtDisclaimer"/>
+                    </Paragraph>                                        
+                    <Paragraph>
+                        <LineBreak />
+                        <Run x:Uid="/SettingsView/TxtCopyright"/>
+                    </Paragraph>
+                </RichTextBlock>        
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
